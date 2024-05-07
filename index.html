@@ -1,0 +1,29 @@
+<script>
+    // Function to fetch user's country information and update timer
+    function fetchCountryInfoAndUpdateTimer() {
+        // Fetch country info
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                var countryName = data.country_name;
+                var countryCode = data.country_code;
+                updateCountryDetails(countryName, countryCode);
+                
+                // Start countdown timer
+                updateTimer();
+            })
+            .catch(error => console.error('Error fetching country info:', error));
+    }
+
+    // Function to update country name and flag
+    function updateCountryDetails(countryName, countryCode) {
+        // Update country name
+        document.querySelector('.app-country-name').textContent = countryName;
+
+        // Update country flag
+        var flagElement = document.querySelector('.app-country-flag');
+        flagElement.classList.remove('flag-icon-' + flagElement.dataset.countryCode); // Remove previous country flag class
+        flagElement.classList.add('flag-icon-' + countryCode.toLowerCase()); // Add new country flag class
+        flagElement.dataset.countryCode = countryCode; // Update dataset attribute with new country code
+    }
+</script>
